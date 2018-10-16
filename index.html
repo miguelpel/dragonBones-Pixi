@@ -2,24 +2,18 @@
 <html>
 
 <head>
-    <title>pixi.js example 1</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #FFFFFF;
-        }
-    </style>
+    <title>Pixi with DragonBones</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="pixi.min.js"></script>
     <script src="pixi-spine.js"></script>
-
 </head>
 
 <body>
+    <div id="app"></div>
     <script>
         var app = new PIXI.Application();
-        document.body.appendChild(app.view);
-        app.renderer.backgroundColor = 0xFFFFFF;
+        document.getElementById("app").appendChild(app.view);
+        app.renderer.backgroundColor = "0xe0e0e0";
         // load spine data
         PIXI.loader
             .add('spineboy', 'Nana.json')
@@ -46,7 +40,7 @@
 
             app.stage.addChild(spineBoy);
 
-            app.stage.on('pointerdown', function() {
+            app.stage.on('pointerdown', function () {
                 spineBoy.state.setAnimation(0, 'Balance', false);
                 spineBoy.state.addAnimation(0, 'Idling', true, 0);
             });

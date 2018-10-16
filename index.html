@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>pixi.js example 1</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #FFFFFF;
+        }
+    </style>
+    <script src="pixi.min.js"></script>
+    <script src="pixi-spine.js"></script>
+
+</head>
+
+<body>
+    <script>
+        var app = new PIXI.Application();
+        document.body.appendChild(app.view);
+        app.renderer.backgroundColor = 0xFFFFFF;
+        // load spine data
+        PIXI.loader
+            .add('spineboy', 'Nana.json')
+            .load(onAssetsLoaded);
+
+        app.stage.interactive = true;
+
+        function onAssetsLoaded(loader, res) {
+            // create a spine boy
+            var spineBoy = new PIXI.spine.Spine(res.spineboy.spineData);
+
+            // set the position
+            spineBoy.x = app.screen.width / 2;
+            spineBoy.y = app.screen.height / 2;
+
+            spineBoy.scale.set(1);
+
+            // set up the mixes!
+            spineBoy.stateData.setMix('Idling', 'Balance', 0.1);
+            spineBoy.stateData.setMix('Idling', 'Balance', 0.1);
+
+            // play animation
+            spineBoy.state.setAnimation(0, 'Idling', true);
+
+            app.stage.addChild(spineBoy);
+
+            app.stage.on('pointerdown', function() {
+                spineBoy.state.setAnimation(0, 'Balance', false);
+                spineBoy.state.addAnimation(0, 'Idling', true, 0);
+            });
+        }
+    </script>
+
+</body>
+
+</html>
